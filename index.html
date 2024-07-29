@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: grid;
+        place-content: center;
+        min-height: 100vh;
+      }
+
+      .wholecontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        gap: 1.5rem;
+      }
+      .container {
+        max-width: 400px;
+        place-content: center;
+        background-color: rgb(221, 217, 212);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .eachcontainer {
+      }
+      .newsabout {
+        place-content: center;
+        /* margin: 10px; */
+      }
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+      header {
+        width: 100%;
+        background-color: #2f2828;
+        padding: 10px 0;
+      }
+      header ul {
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+      header ul li {
+        margin: 0 15px;
+      }
+      .content {
+        margin: 20px;
+        width: 80%;
+        place-content: center;
+      }
+      .head {
+        color: rgb(236, 236, 247);
+        position: fixed;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <header>
+        <ul style="list-style-type: none">
+          <li>Home</li>
+          <li>News</li>
+          <li>Authors</li>
+          <li>catgories</li>
+          <li>services</li>
+        </ul>
+      </header>
+    </div>
+    <div class="wholecontainer"></div>
+    <script>
+      function newsApi() {
+        const details = fetch(
+          "https://newsapi.org/v2/top-headlines?country=us&apiKey=6c586543a45f41f4b904a3b7152e15e2"
+        )
+          .then((response) => response.json())
+
+          .then((data) => {
+            data.articles.forEach((article) => {
+              document.querySelector(
+                ".wholecontainer"
+              ).innerHTML += `<div class="container"> 
+      
+        <div class="content">
+          <h1>${article.author}</h1>
+          <h3>
+          ${article.title}
+          </h3>
+          <p>
+           ${article.description}
+          </p>
+          <img
+            src="${article.urlToImage}"
+            alt="Image"
+          />
+          <p>${article.publishedAt}</p>
+          <p>
+          ${article.content}
+          </p>
+       
+      </div>  </div>  `;
+            });
+          });
+      }
+      newsApi();
+    </script>
+  </body>
+</html>
